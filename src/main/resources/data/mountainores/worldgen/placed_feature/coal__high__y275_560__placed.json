@@ -1,0 +1,28 @@
+{
+  "feature": "mountainores:coal__high__cfg",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 4
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "min_inclusive": {
+          "absolute": 275
+        },
+        "max_inclusive": {
+          "absolute": 560
+        },
+        "plateau": 140
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

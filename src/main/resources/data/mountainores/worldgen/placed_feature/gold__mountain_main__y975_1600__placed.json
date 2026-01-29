@@ -1,0 +1,32 @@
+{
+  "feature": "mountainores:gold__mountain_main__cfg",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 1
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 18
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "min_inclusive": {
+          "absolute": 975
+        },
+        "max_inclusive": {
+          "absolute": 1600
+        },
+        "plateau": 240
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

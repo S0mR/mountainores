@@ -1,0 +1,27 @@
+{
+	"schemaVersion": 1,
+	"id": "mountainores",
+	"version": "${version}",
+	"name": "MountainOres",
+	"description": "Adds peak-based ore generation in higher layers",
+	"authors": [
+		"Kinauvin"
+	],
+	"license": "MIT",
+	"icon": "assets/mountainores/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"de.kin.mountainores.MountainOres"
+		]
+	},
+	"mixins": [
+		"mountainores.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.18.4",
+		"minecraft": "~1.21.10",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}

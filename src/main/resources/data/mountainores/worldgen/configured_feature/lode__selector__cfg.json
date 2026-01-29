@@ -1,0 +1,225 @@
+{
+  "type": "mountainores:lode__selector",
+  "config": {
+    "exposure_shrink_factor": 0.55,
+    "entries": [
+      {
+        "weight": 87,
+        "min_y": -64,
+        "max_y": 1360,
+        "min_size": 56,
+        "max_size": 112,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:coal_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_coal_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 55,
+        "min_y": -16,
+        "max_y": 1100,
+        "min_size": 49,
+        "max_size": 98,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:copper_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_copper_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 39,
+        "min_y": -64,
+        "max_y": 1730,
+        "min_size": 56,
+        "max_size": 119,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:iron_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_iron_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 36,
+        "min_y": -64,
+        "max_y": 2030,
+        "min_size": 35,
+        "max_size": 77,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:gold_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_gold_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 33,
+        "min_y": -64,
+        "max_y": 64,
+        "min_size": 35,
+        "max_size": 77,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:lapis_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_lapis_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 30,
+        "min_y": -64,
+        "max_y": 16,
+        "min_size": 28,
+        "max_size": 63,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:diamond_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_diamond_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "weight": 20,
+        "min_y": -64,
+        "max_y": 15,
+        "min_size": 39,
+        "max_size": 78,
+        "ore": {
+          "size": 1,
+          "discard_chance_on_air_exposure": 0.0,
+          "targets": [
+            {
+              "state": {
+                "Name": "minecraft:redstone_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:stone_ore_replaceables"
+              }
+            },
+            {
+              "state": {
+                "Name": "minecraft:deepslate_redstone_ore"
+              },
+              "target": {
+                "predicate_type": "minecraft:tag_match",
+                "tag": "minecraft:deepslate_ore_replaceables"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

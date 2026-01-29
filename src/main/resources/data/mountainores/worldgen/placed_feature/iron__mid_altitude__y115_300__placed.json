@@ -1,0 +1,28 @@
+{
+  "feature": "mountainores:iron__mid_altitude__cfg",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": 5
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "min_inclusive": {
+          "absolute": 115
+        },
+        "max_inclusive": {
+          "absolute": 300
+        },
+        "plateau": 96
+      }
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}
