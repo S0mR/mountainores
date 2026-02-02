@@ -2,7 +2,7 @@
   "type": "mountainores:coal__underground__ore",
   "config": {
     "size": 17,
-    "discard_chance_on_air_exposure": 0.5,
+    "discard_chance_on_air_exposure": 0.0,
     "targets": [
       {
         "state": {

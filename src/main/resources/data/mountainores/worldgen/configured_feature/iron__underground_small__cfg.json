@@ -1,7 +1,7 @@
 {
   "type": "mountainores:iron__underground_small__ore",
   "config": {
-    "size": 5,
+    "size": 4,
     "discard_chance_on_air_exposure": 0.0,
     "targets": [
       {

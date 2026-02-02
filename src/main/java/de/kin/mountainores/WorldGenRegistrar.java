@@ -127,36 +127,34 @@ public class WorldGenRegistrar {
     }
 
     private static void addVanillaLikeUndergroundOres() {
-        Predicate<BiomeSelectionContext> overworldExceptDripstoneCaves = (context) ->
-            BiomeSelectors.foundInOverworld().test(context) && !context.getBiomeKey().equals(BiomeKeys.DRIPSTONE_CAVES);
+        // Use simple BiomeSelectors.foundInOverworld() for maximum compatibility with C2ME and other mods
+        // Dripstone caves will get both normal copper AND large copper - slightly more copper, but more reliable
+        
+        // Underground replacements (Y<=63, vanilla-like; emerald intentionally excluded)
+        addOreFeatureToBiomes("coal__underground__y-32_0__placed");
+        addOreFeatureToBiomes("coal__underground__y1_68__placed");
 
-        // Underground replacements (Y<=63, vanilla-like, slightly reduced; emerald intentionally excluded)
-        addOreFeatureToBiomes("coal__underground__y-32_0__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("coal__underground__y1_68__placed", overworldExceptDripstoneCaves);
-
-        addOreFeatureToBiomes("iron__underground__y-64_0__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("iron__underground__main__y-24_56__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("iron__underground__low__y1_32__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("iron__underground__tail__y24_68__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("iron__underground__y-64_0__placed");
+        addOreFeatureToBiomes("iron__underground__main__y-24_56__placed");
+        addOreFeatureToBiomes("iron__underground__low__y1_32__placed");
+        addOreFeatureToBiomes("iron__underground__tail__y24_68__placed");
 
         // Vanilla-like "small iron" extra hits
-        addOreFeatureToBiomes("iron__underground_small__y-64_0__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("iron__underground_small__y1_68__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("iron__underground_small__y-64_0__placed");
+        addOreFeatureToBiomes("iron__underground_small__y1_68__placed");
 
-        addOreFeatureToBiomes("copper__underground__y-16_0__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("copper__underground__low__y1_48__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("copper__underground__peak__y32_68__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("copper__underground__y-16_0__placed");
+        addOreFeatureToBiomes("copper__underground__low__y1_48__placed");
+        addOreFeatureToBiomes("copper__underground__peak__y32_68__placed");
 
-        // Special-case: dripstone caves get extra-large copper instead of normal copper placements.
-        // Note: we intentionally deviate from vanilla here by allowing the placement across all heights
-        // (some packs can generate dripstone caves far above vanilla terrain heights).
+        // Special-case: dripstone caves get extra-large copper in addition to normal copper placements.
         addOreFeatureToBiomes(
             "copper__dripstone_caves__large__all_heights__placed",
             BiomeSelectors.includeByKey(BiomeKeys.DRIPSTONE_CAVES)
         );
 
-        addOreFeatureToBiomes("gold__underground__main__y-64_32__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("gold__underground__deep__y-64_-48__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("gold__underground__main__y-64_32__placed");
+        addOreFeatureToBiomes("gold__underground__deep__y-64_-48__placed");
 
         // Badlands extra gold (vanilla-like ore_gold_extra replacement)
         // Uses all heights (below_top: 0) to support packs like JJ Thunder where Badlands can spawn at extreme heights.
@@ -165,17 +163,17 @@ public class WorldGenRegistrar {
             BiomeSelectors.includeByKey(BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS)
         );
 
-        addOreFeatureToBiomes("redstone__underground__best__y-64_-54__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("redstone__underground__tail__y-54_16__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("redstone__underground__best__y-64_-54__placed");
+        addOreFeatureToBiomes("redstone__underground__tail__y-54_16__placed");
 
-        addOreFeatureToBiomes("lapis__underground__open__y-32_32__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("lapis__underground__buried__y-64_64__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("lapis__underground__open__y-32_32__placed");
+        addOreFeatureToBiomes("lapis__underground__buried__y-64_64__placed");
 
-        addOreFeatureToBiomes("diamond__underground__best__y-64_-54__placed", overworldExceptDripstoneCaves);
-        addOreFeatureToBiomes("diamond__underground__tail__y-54_16__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("diamond__underground__best__y-64_-54__placed");
+        addOreFeatureToBiomes("diamond__underground__tail__y-54_16__placed");
 
         // Vanilla-like large diamond veins (ore_diamond_large equivalent, rarity 1/9)
-        addOreFeatureToBiomes("diamond__underground_large__y-64_-54__placed", overworldExceptDripstoneCaves);
+        addOreFeatureToBiomes("diamond__underground_large__y-64_-54__placed");
     }
 
     private static void addOreFeatureToBiomes(String featureName) {
@@ -186,12 +184,19 @@ public class WorldGenRegistrar {
         Identifier featureId = Identifier.of("mountainores", featureName);
         RegistryKey<PlacedFeature> featureKey = RegistryKey.of(RegistryKeys.PLACED_FEATURE, featureId);
 
-        // Feature zu allen Biomen hinzufügen
         LOGGER.info("[mountainores] Add PlacedFeature to biomes: {}", featureId);
-        BiomeModifications.addFeature(
-            selector,
-                GenerationStep.Feature.UNDERGROUND_ORES,
-                featureKey
-        );
+        
+        // Use BiomeModifications.create() with ADDITIONS phase for consistent registration
+        BiomeModifications.create(Identifier.of("mountainores", "add_" + featureName))
+                .add(
+                        ModificationPhase.ADDITIONS,
+                        selector,
+                        (selectionContext, modificationContext) -> {
+                            modificationContext.getGenerationSettings().addFeature(
+                                    GenerationStep.Feature.UNDERGROUND_ORES,
+                                    featureKey
+                            );
+                        }
+                );
     }
 }

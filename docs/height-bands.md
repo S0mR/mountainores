@@ -67,14 +67,71 @@ Assumption for this table: `overrideVanillaOres: true`.
 
 | Ore | Best Y-level (approx.) | Y-level range (approx.) | Biome notes |
 |---|---:|---|---|
-| Coal | ~190 and ~957 and ~35 | -32–68; 120–1360 | All Overworld biomes; overlap zones avoid hard cuts |
-| Copper | ~130 and ~50 | -16–68; 60–1100 | All Overworld biomes; 32–68 is intentionally emphasized |
-| Iron | ~460 and ~1412 and ~16 | -64–68; 60–1730 | All Overworld biomes; underground (Y<=63) low peak is vanilla-like; includes extra “small iron” hits |
-| Gold | ~1288 and ~-16 | -64–32; 975–2031 | All Overworld biomes; underground (Y<=63) is vanilla-like (no badlands extra); high-alt gold is rare (rarity filter) |
-| Diamond | ~-59 | -64–16 | All Overworld biomes; underground (Y<=63) replacement |
-| Redstone | ~-59 | -64–16 | All Overworld biomes; underground (Y<=63) replacement |
-| Lapis Lazuli | ~0 | -64–64 | All Overworld biomes; vanilla-like (lapis + buried lapis) |
-| Emerald | ~1288 | 975–2031 | All Overworld biomes; high-alt emerald is rare (rarity filter) |
+| Coal | ~190 and ~957 and ~35 | -64–68; 120–1360 | All Overworld biomes; underground Y=-64..0 (count 10) + Y=1..68 (count 12); high-altitude extends to 1360 |
+| Copper | ~50 and ~130 | -16–68; 60–1100 | All Overworld biomes; underground peak Y=32..68 (count 7); dripstone caves extra (count 16) |
+| Iron | ~16 and ~460 and ~1412 | -64–68; 60–1730 | All Overworld biomes; deep small veins Y=-64..0 (size 4, count 10); large veins Y=-24..56; high-alt extends to 1730 |
+| Gold | ~-16 and ~1288 | -64–32; 975–2031 | All Overworld biomes; underground trapezoid Y=-64..32 (count 4); badlands extra Y=32–top (count 50); high-alt rare (1/18 and 1/24) |
+| Diamond | ~-59 | -64–16 | All Overworld biomes; best Y=-64..-54 (count 5); tail Y=-54..16 (count 3); large veins (1/5 chance) |
+| Redstone | ~-59 | -64–16 | All Overworld biomes; best Y=-64..-54 (count 8); tail Y=-54..16 (count 4) |
+| Lapis Lazuli | ~0 | -64–64 | All Overworld biomes; buried Y=-64..64 (count 4); open trapezoid Y=-32..32 (count 2) |
+| Emerald | ~1288 | 975–2031 | All Overworld biomes; high-alt only; rare (1/24 and 1/32) |
+
+### Detailed placed-feature breakdown
+
+**Coal (6 features):**
+- `coal__underground__y-32_0`: Y=-64..0, uniform, count 10
+- `coal__underground__y1_68`: Y=1..68, trapezoid (plateau 40), count 12
+- `coal__main__y120_260`: Y=120..260, trapezoid (plateau 72), count 8
+- `coal__mid_altitude__y175_360`: Y=175..360, trapezoid (plateau 96), count 6
+- `coal__high__y275_560`: Y=275..560, trapezoid (plateau 140), count 4
+- `coal__high_tail__y555_1360`: Y=555..1360, trapezoid (plateau 260), count 2
+
+**Copper (8 features):**
+- `copper__underground__y-16_0`: Y=-16..0, uniform, count 4
+- `copper__underground__low__y1_48`: Y=1..48, trapezoid, count 5
+- `copper__underground__peak__y32_68`: Y=32..68, trapezoid (plateau 16), count 7
+- `copper__main__y60_200`: Y=60..200, trapezoid (plateau 72), count 3
+- `copper__mid_altitude__y115_300`: Y=115..300, trapezoid (plateau 96), count 4
+- `copper__high__y215_700`: Y=215..700, trapezoid (plateau 200), count 2
+- `copper__mountain_tail__y595_1100`: Y=595..1100, trapezoid (plateau 200), count 1
+- `copper__dripstone_caves__large`: all heights, trapezoid, count 16 (dripstone caves only)
+
+**Iron (11 features):**
+- `iron__underground_small__y-64_0`: Y=-64..0, uniform, count 10, size 4 (vanilla-like)
+- `iron__underground__y-64_0`: Y=-64..0, uniform, count 4, size 9
+- `iron__underground__main__y-24_56`: Y=-24..56, trapezoid, count 7
+- `iron__underground__low__y1_32`: Y=1..32, trapezoid (plateau 8), count 6
+- `iron__underground__tail__y24_68`: Y=24..68, trapezoid, count 2
+- `iron__underground_small__y1_68`: Y=1..68, uniform, count 2
+- `iron__main__y60_200`: Y=60..200, trapezoid (plateau 72), count 5
+- `iron__mid_altitude__y115_300`: Y=115..300, trapezoid (plateau 96), count 5
+- `iron__high__y215_700`: Y=215..700, trapezoid (plateau 200), count 8
+- `iron__mountain_tail__y595_1100`: Y=595..1100, trapezoid (plateau 200), count 3
+- `iron__high_tail__y1095_1730`: Y=1095..1730, trapezoid (plateau 200), count 2
+
+**Gold (5 features):**
+- `gold__underground__deep__y-64_-48`: Y=-64..-48, uniform, count 0-1
+- `gold__underground__main__y-64_32`: Y=-64..32, trapezoid, count 4
+- `gold__badlands_extra__y32_all_heights`: Y=32..top, uniform, count 50 (badlands only)
+- `gold__mountain_main__y975_1600`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/18
+- `gold__mountain_tail__y1475_2031`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/24
+
+**Diamond (3 features):**
+- `diamond__underground__best__y-64_-54`: Y=-64..-54, trapezoid, count 5
+- `diamond__underground__tail__y-54_16`: Y=-54..16, trapezoid, count 3
+- `diamond__underground_large__y-64_-54`: Y=-64..-54, trapezoid, count 1, rarity 1/5
+
+**Redstone (2 features):**
+- `redstone__underground__best__y-64_-54`: Y=-64..-54, trapezoid, count 8
+- `redstone__underground__tail__y-54_16`: Y=-54..16, trapezoid, count 4
+
+**Lapis Lazuli (2 features):**
+- `lapis__underground__buried__y-64_64`: Y=-64..64, uniform, count 4
+- `lapis__underground__open__y-32_32`: Y=-32..32, trapezoid, count 2
+
+**Emerald (2 features):**
+- `emerald__mountain_main__y975_1600`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/24
+- `emerald__mountain_tail__y1475_2031`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/32
 
 ## Vanilla reference (Minecraft 1.21.10)
 
