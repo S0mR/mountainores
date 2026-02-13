@@ -1,4 +1,4 @@
-# MountainOres (Fabric 1.21.10)
+# MountainOres (MC >=1.21.10 Fabric)
 
 MountainOres adjusts ore generation for **very tall worlds (up to Y=2032)** while keeping vanilla generation intact for **Y<=63**.
 
