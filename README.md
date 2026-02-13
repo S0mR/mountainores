@@ -1,60 +1,107 @@
-# MountainOres (MC >=1.21.10 Fabric)
+# MountainOres v2.0 (MC 1.21.11 · Fabric)
 
-MountainOres adjusts ore generation for **very tall worlds (up to Y=2032)** while keeping vanilla generation intact for **Y<=63**.
+MountainOres adds ore generation **above sea level (Y ≥ 64)** for any world height — vanilla or modded — while keeping underground generation (Y ≤ 63) intact.
 
-Optionally, MountainOres can **override vanilla ore placement** to prevent datapacks from changing ore spawn via `minecraft:ore_*` placed features.
+It **automatically detects** the actual world height at runtime and scales both ore Y-positions and spawn counts to match. No manual configuration needed.
 
 ## Features
 
-- Band-based ore distribution for Y>=64 (coal/iron/copper/gold/emerald)
-- Very rare “jackpot” deposits (lodes): one roll per ~1000 chunks, then weighted ore selection
-- Vanilla-like behavior where possible (targets, air-exposure discard behavior)
+- **Automatic height scaling** — reads the dimension's real height at runtime; no manual config needed
+- **Band-based ore distribution** for Y ≥ 64 (coal, iron, copper, gold, emerald)
+- **Scaled spawn counts** — ore density stays consistent regardless of world height
+- **Lode deposits** — very rare "jackpot" veins (one roll per ~1000 chunks, weighted ore selection)
+- **Vanilla ore override** — optionally replaces vanilla ore placement to prevent datapack conflicts
+- Vanilla-like behavior where possible (targets, air-exposure discard)
 
-## Tuning / balancing
+## Height Scaling
 
-Worldgen tuning is intentionally JSON-driven:
+All above-ground ore placement (Y ≥ 64) is internally authored for a reference height of 2032. At runtime, the mod detects the actual world height and linearly scales both Y-positions and spawn counts to fit. Examples:
 
-- `src/main/resources/data/mountainores/worldgen/placed_feature/` (frequency + height distribution)
-- `src/main/resources/data/mountainores/worldgen/configured_feature/` (targets, discard chance, lode weights)
+| World setup        | Detected height | Scaling factor |
+|--------------------|-----------------|----------------|
+| Vanilla            | 320             | 0.130          |
+| Lithosphere        | 512             | 0.228          |
+| JJThunder          | 2032            | 1.000 (no scaling) |
 
-Guides:
-- `docs/worldgen-tuning.md`
-- `docs/height-bands.md`
+The scaling is handled by two custom placement modifiers:
 
-## Optional: Ore Override mode (recommended if you use ore-altering datapacks)
+- `mountainores:scaled_height_range` — scales Y positions
+- `mountainores:scaled_count` — scales spawn counts proportionally
 
-If you run datapacks that modify vanilla ores (e.g. by overriding `minecraft:worldgen/placed_feature/ore_*.json`), you can enable MountainOres **Ore Override** mode.
+Underground ores (Y < 64) are **never** scaled.
 
-What it does:
-- Removes selected vanilla **real ore** placed-features from all Overworld biomes (coal/iron/copper/gold/redstone/lapis/diamond/emerald).
-- Keeps terrain patches untouched (tuff/granite/diorite/andesite/dirt/gravel are NOT removed).
-- Adds MountainOres-managed **Band 0** replacement ores for **Y<=63** (vanilla-like, ~8–15% reduced).
+## Datapack Compatibility
 
-How to enable:
-- Start the game/server once to generate `config/mountainores.json`.
-- Set `overrideVanillaOres` to `true`.
+MountainOres is tested with:
 
-Example `config/mountainores.json`:
+- **Lithosphere** (world height 576, Y -64 to 512)
+- **JJThunderToTheMax** (world height 2032, Y -64 to 2032) 
 
-```json
-{
-	"overrideVanillaOres": true,
-	"logVanillaOreOverride": false
-}
+MountainOres uses its own namespace (`mountainores:`) and the Fabric Biome Modification API, so it does not conflict with datapacks that modify vanilla ore features.
+
+## Configuration
+
+On first launch, `config/mountainores.toml` is generated with full comments:
+
+```toml
+# Replace vanilla ore generation with MountainOres equivalents.
+overrideVanillaOres = true
+
+# Log which vanilla ore features were replaced (useful for debugging).
+logVanillaOreOverride = false
+
+# When true (default), reads the actual world height from the dimension.
+autoDetectWorldHeight = true
+
+# Manual override (only used when autoDetectWorldHeight = false).
+maxWorldHeight = 2032
 ```
 
-Note: Emerald is still handled by MountainOres (no new underground (Y<=63) emerald).
+### Config options
+
+| Option                   | Default | Description |
+|--------------------------|---------|-------------|
+| `overrideVanillaOres`    | `true`  | Remove vanilla ore placed-features and replace with MountainOres underground equivalents (Y ≤ 63) |
+| `logVanillaOreOverride`  | `false` | Log which vanilla ores were replaced (debug) |
+| `autoDetectWorldHeight`  | `true`  | Auto-detect world height from the dimension at runtime |
+| `maxWorldHeight`         | `2032`  | Manual world height override (only when `autoDetectWorldHeight = false`) |
+
+## Ore Override Mode
+
+When `overrideVanillaOres = true`:
+
+- Removes selected vanilla **real ore** placed-features from all Overworld biomes (coal, iron, copper, gold, redstone, lapis, diamond, emerald)
+- Keeps terrain patches untouched (tuff/granite/diorite/andesite/dirt/gravel are NOT removed)
+- Adds MountainOres-managed **Band 0** replacement ores for Y ≤ 63 (vanilla-like, ~8–15% reduced)
+
+Note: Emerald is handled by MountainOres only above ground (no underground emerald replacement).
+
+## Tuning / Balancing
+
+Worldgen tuning is JSON-driven:
+
+- `src/main/resources/data/mountainores/worldgen/placed_feature/` — frequency + height distribution
+- `src/main/resources/data/mountainores/worldgen/configured_feature/` — targets, discard chance, lode weights
+
+Guides:
+
+- [docs/worldgen-tuning.md](docs/worldgen-tuning.md)
+- [docs/height-bands.md](docs/height-bands.md)
 
 ## Build
 
-- `./gradlew build`
-- Output JAR: `build/libs/mountainores-<version>.jar`
+```sh
+./gradlew build
+```
+
+Output JAR: `build/libs/mountainores-2.0.0.jar`
 
 ## Install
 
-- Requires Minecraft `1.21.10`, Fabric Loader, and Fabric API.
-- Drop the built JAR into your instance’s `mods/` folder.
+- Requires **Minecraft 1.21.11**, Fabric Loader, and Fabric API
+- Drop the built JAR into your instance's `mods/` folder
+- The TOML library (toml4j) is bundled inside the JAR — no extra dependencies needed
 
 ## License
 
-MIT (see `LICENSE`).
+MIT (see [LICENSE](LICENSE)).
