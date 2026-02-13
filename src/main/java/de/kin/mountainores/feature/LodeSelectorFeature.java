@@ -2,6 +2,7 @@ package de.kin.mountainores.feature;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import de.kin.mountainores.HeightScaler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
@@ -66,9 +67,15 @@ public class LodeSelectorFeature extends Feature<LodeSelectorFeature.Config> {
             return false;
         }
 
-        int clampedMinY = Math.max(entry.minY(), world.getBottomY());
+        // Scale lode Y-range to the effective world height
+        int worldTopY = world.getBottomY() + world.getHeight();
+        int maxWorldHeight = HeightScaler.resolveMaxWorldHeight(worldTopY);
+        int scaledMinY = HeightScaler.scaleY(entry.minY(), maxWorldHeight);
+        int scaledMaxY = HeightScaler.scaleY(entry.maxY(), maxWorldHeight);
+
+        int clampedMinY = Math.max(scaledMinY, world.getBottomY());
         int worldTopExclusive = world.getBottomY() + world.getHeight();
-        int clampedMaxY = Math.min(entry.maxY(), worldTopExclusive - 1);
+        int clampedMaxY = Math.min(scaledMaxY, worldTopExclusive - 1);
         if (clampedMinY > clampedMaxY) {
             return false;
         }

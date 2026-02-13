@@ -1,8 +1,8 @@
 {
-  "feature": "mountainores:emerald__mountain_main__cfg",
+  "feature": "mountainores:gold__mountain_tail__cfg",
   "placement": [
     {
-      "type": "minecraft:count",
+      "type": "mountainores:scaled_count",
       "count": 1
     },
     {
@@ -13,16 +13,16 @@
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:height_range",
+      "type": "mountainores:scaled_height_range",
       "height": {
         "type": "minecraft:trapezoid",
         "min_inclusive": {
-          "absolute": 975
+          "absolute": 1475
         },
         "max_inclusive": {
-          "absolute": 1600
+          "absolute": 2031
         },
-        "plateau": 240
+        "plateau": 200
       }
     },
     {

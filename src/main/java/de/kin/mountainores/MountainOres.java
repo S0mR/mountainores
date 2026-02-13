@@ -1,5 +1,7 @@
 package de.kin.mountainores;
 
+import de.kin.mountainores.placement.ScaledCountPlacementModifier;
+import de.kin.mountainores.placement.ScaledHeightRangePlacementModifier;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -20,8 +22,23 @@ public class MountainOres implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 		CONFIG = MountainOresConfig.load(LOGGER);
+
+		// Register custom placement modifier types
+		// (must happen before worldgen JSONs are deserialized)
+		ScaledHeightRangePlacementModifier.register();
+		ScaledCountPlacementModifier.register();
+
 		FeatureRegistrar.registerFeatures();
 		WorldGenRegistrar.registerAll();
-		LOGGER.info("Hello Fabric world!");
+
+		if (HeightScaler.isAutoDetect()) {
+			LOGGER.info("[mountainores] Height scaling: auto-detect enabled (reference={})",
+					HeightScaler.REFERENCE_HEIGHT);
+		} else {
+			LOGGER.info("[mountainores] Height scaling: manual maxWorldHeight={} (reference={})",
+					CONFIG.maxWorldHeight, HeightScaler.REFERENCE_HEIGHT);
+		}
+
+		LOGGER.info("Mountain Ores initialized successfully");
 	}
 }

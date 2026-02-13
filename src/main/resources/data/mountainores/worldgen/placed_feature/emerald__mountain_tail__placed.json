@@ -1,22 +1,26 @@
 {
-  "feature": "mountainores:copper__high__cfg",
+  "feature": "mountainores:emerald__mountain_tail__cfg",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 2
+      "type": "mountainores:scaled_count",
+      "count": 1
+    },
+    {
+      "type": "minecraft:rarity_filter",
+      "chance": 32
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:height_range",
+      "type": "mountainores:scaled_height_range",
       "height": {
         "type": "minecraft:trapezoid",
         "min_inclusive": {
-          "absolute": 215
+          "absolute": 1475
         },
         "max_inclusive": {
-          "absolute": 700
+          "absolute": 2031
         },
         "plateau": 200
       }

@@ -1,24 +1,24 @@
 {
-  "feature": "mountainores:iron__mountain_tail__cfg",
+  "feature": "mountainores:copper__main__cfg",
   "placement": [
     {
-      "type": "minecraft:count",
+      "type": "mountainores:scaled_count",
       "count": 3
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:height_range",
+      "type": "mountainores:scaled_height_range",
       "height": {
         "type": "minecraft:trapezoid",
         "min_inclusive": {
-          "absolute": 595
+          "absolute": 60
         },
         "max_inclusive": {
-          "absolute": 1100
+          "absolute": 200
         },
-        "plateau": 200
+        "plateau": 72
       }
     },
     {

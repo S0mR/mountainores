@@ -55,7 +55,7 @@ There are three layers:
 3. **Placed feature (JSON)**
    - Files in `.../placed_feature/*_placed.json`.
    - These define *how often* and *where* it runs (count/rarity/height range/biome).
-  - The **placed feature ID** is the filename, e.g. `placed_feature/iron__main__y60_200__placed.json` → `mountainores:iron__main__y60_200__placed`.
+  - The **placed feature ID** is the filename, e.g. `placed_feature/iron__main__placed.json` → `mountainores:iron__main__placed`.
 
 At runtime, `WorldGenRegistrar` injects the **placed features** into Overworld biomes.
 
@@ -67,7 +67,7 @@ Edit the placed features in `.../placed_feature/*__placed.json`:
 
 - `minecraft:count` = attempts per chunk
 - `minecraft:rarity_filter` = extra 1/N gate (only present for some ores)
-- `minecraft:height_range` = vertical distribution (triangle/trapezoid)
+- `mountainores:scaled_height_range` = vertical distribution (triangle/trapezoid), auto-scaled to `maxWorldHeight`
 
 Rule of thumb:
 

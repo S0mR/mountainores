@@ -10,7 +10,7 @@
 - `placed_feature/`
   - *How often* / *where* it runs (count, rarity, height distribution, biome filter).
   - Placed feature ID is the filename:
-    - `placed_feature/iron__main__y60_200__placed.json` ⇒ `mountainores:iron__main__y60_200__placed`
+    - `placed_feature/iron__main__placed.json` ⇒ `mountainores:iron__main__placed`
 
 ## Where is the code?
 
@@ -20,7 +20,7 @@
 ## What is safe to tweak?
 
  - Band balancing (recommended): edit `placed_feature/*__placed.json`
-  - `minecraft:count`, `minecraft:rarity_filter`, `minecraft:height_range`
+  - `minecraft:count`, `minecraft:rarity_filter`, `mountainores:scaled_height_range`
 - Ore targets / air exposure: edit `configured_feature/*__cfg.json`
   - `targets`, `discard_chance_on_air_exposure`
 - Lodes (jackpot deposits):

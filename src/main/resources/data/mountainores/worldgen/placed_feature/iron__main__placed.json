@@ -1,24 +1,24 @@
 {
-  "feature": "mountainores:coal__high__cfg",
+  "feature": "mountainores:iron__main__cfg",
   "placement": [
     {
-      "type": "minecraft:count",
-      "count": 4
+      "type": "mountainores:scaled_count",
+      "count": 5
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:height_range",
+      "type": "mountainores:scaled_height_range",
       "height": {
         "type": "minecraft:trapezoid",
         "min_inclusive": {
-          "absolute": 275
+          "absolute": 60
         },
         "max_inclusive": {
-          "absolute": 560
+          "absolute": 200
         },
-        "plateau": 140
+        "plateau": 72
       }
     },
     {

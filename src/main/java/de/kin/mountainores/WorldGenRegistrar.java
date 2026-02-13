@@ -42,29 +42,29 @@ public class WorldGenRegistrar {
         // Band-based placed features (see docs/height-bands.md)
 
         // Coal (bands 1-3 only; extended high tail via placement)
-        addOreFeatureToBiomes("coal__main__y120_260__placed");
-        addOreFeatureToBiomes("coal__mid_altitude__y175_360__placed");
-        addOreFeatureToBiomes("coal__high__y275_560__placed");
-        addOreFeatureToBiomes("coal__high_tail__y555_1360__placed");
+        addOreFeatureToBiomes("coal__main__placed");
+        addOreFeatureToBiomes("coal__mid_altitude__placed");
+        addOreFeatureToBiomes("coal__high__placed");
+        addOreFeatureToBiomes("coal__high_tail__placed");
 
         // Iron (bands 1-4)
-        addOreFeatureToBiomes("iron__main__y60_200__placed");
-        addOreFeatureToBiomes("iron__mid_altitude__y115_300__placed");
-        addOreFeatureToBiomes("iron__high__y215_700__placed");
-        addOreFeatureToBiomes("iron__mountain_tail__y595_1100__placed");
-        addOreFeatureToBiomes("iron__high_tail__y1095_1730__placed");
+        addOreFeatureToBiomes("iron__main__placed");
+        addOreFeatureToBiomes("iron__mid_altitude__placed");
+        addOreFeatureToBiomes("iron__high__placed");
+        addOreFeatureToBiomes("iron__mountain_tail__placed");
+        addOreFeatureToBiomes("iron__high_tail__placed");
 
         // Copper (bands 1-4; weak tail in band 4)
-        addOreFeatureToBiomes("copper__main__y60_200__placed");
-        addOreFeatureToBiomes("copper__mid_altitude__y115_300__placed");
-        addOreFeatureToBiomes("copper__high__y215_700__placed");
-        addOreFeatureToBiomes("copper__mountain_tail__y595_1100__placed");
+        addOreFeatureToBiomes("copper__main__placed");
+        addOreFeatureToBiomes("copper__mid_altitude__placed");
+        addOreFeatureToBiomes("copper__high__placed");
+        addOreFeatureToBiomes("copper__mountain_tail__placed");
 
         // Gold + Emerald (band 5 + modest tail in band 6)
-        addOreFeatureToBiomes("gold__mountain_main__y975_1600__placed");
-        addOreFeatureToBiomes("emerald__mountain_main__y975_1600__placed");
-        addOreFeatureToBiomes("gold__mountain_tail__y1475_2031__placed");
-        addOreFeatureToBiomes("emerald__mountain_tail__y1475_2031__placed");
+        addOreFeatureToBiomes("gold__mountain_main__placed");
+        addOreFeatureToBiomes("emerald__mountain_main__placed");
+        addOreFeatureToBiomes("gold__mountain_tail__placed");
+        addOreFeatureToBiomes("emerald__mountain_tail__placed");
 
         // Rare large deposits ("lodes") across all heights.
         // Exactly one roll per chunk (via rarity), then weighted ore selection inside the feature.
@@ -131,49 +131,49 @@ public class WorldGenRegistrar {
         // Dripstone caves will get both normal copper AND large copper - slightly more copper, but more reliable
         
         // Underground replacements (Y<=63, vanilla-like; emerald intentionally excluded)
-        addOreFeatureToBiomes("coal__underground__y-32_0__placed");
-        addOreFeatureToBiomes("coal__underground__y1_68__placed");
+        addOreFeatureToBiomes("coal__underground__deep__placed");
+        addOreFeatureToBiomes("coal__underground__upper__placed");
 
-        addOreFeatureToBiomes("iron__underground__y-64_0__placed");
-        addOreFeatureToBiomes("iron__underground__main__y-24_56__placed");
-        addOreFeatureToBiomes("iron__underground__low__y1_32__placed");
-        addOreFeatureToBiomes("iron__underground__tail__y24_68__placed");
+        addOreFeatureToBiomes("iron__underground__deep__placed");
+        addOreFeatureToBiomes("iron__underground__main__placed");
+        addOreFeatureToBiomes("iron__underground__low__placed");
+        addOreFeatureToBiomes("iron__underground__tail__placed");
 
         // Vanilla-like "small iron" extra hits
-        addOreFeatureToBiomes("iron__underground_small__y-64_0__placed");
-        addOreFeatureToBiomes("iron__underground_small__y1_68__placed");
+        addOreFeatureToBiomes("iron__underground_small__deep__placed");
+        addOreFeatureToBiomes("iron__underground_small__upper__placed");
 
-        addOreFeatureToBiomes("copper__underground__y-16_0__placed");
-        addOreFeatureToBiomes("copper__underground__low__y1_48__placed");
-        addOreFeatureToBiomes("copper__underground__peak__y32_68__placed");
+        addOreFeatureToBiomes("copper__underground__deep__placed");
+        addOreFeatureToBiomes("copper__underground__low__placed");
+        addOreFeatureToBiomes("copper__underground__peak__placed");
 
         // Special-case: dripstone caves get extra-large copper in addition to normal copper placements.
         addOreFeatureToBiomes(
-            "copper__dripstone_caves__large__all_heights__placed",
+            "copper__dripstone_caves__large__placed",
             BiomeSelectors.includeByKey(BiomeKeys.DRIPSTONE_CAVES)
         );
 
-        addOreFeatureToBiomes("gold__underground__main__y-64_32__placed");
-        addOreFeatureToBiomes("gold__underground__deep__y-64_-48__placed");
+        addOreFeatureToBiomes("gold__underground__main__placed");
+        addOreFeatureToBiomes("gold__underground__deep__placed");
 
         // Badlands extra gold (vanilla-like ore_gold_extra replacement)
         // Uses all heights (below_top: 0) to support packs like JJ Thunder where Badlands can spawn at extreme heights.
         addOreFeatureToBiomes(
-            "gold__badlands_extra__y32_all_heights__placed",
+            "gold__badlands_extra__placed",
             BiomeSelectors.includeByKey(BiomeKeys.BADLANDS, BiomeKeys.ERODED_BADLANDS, BiomeKeys.WOODED_BADLANDS)
         );
 
-        addOreFeatureToBiomes("redstone__underground__best__y-64_-54__placed");
-        addOreFeatureToBiomes("redstone__underground__tail__y-54_16__placed");
+        addOreFeatureToBiomes("redstone__underground__best__placed");
+        addOreFeatureToBiomes("redstone__underground__tail__placed");
 
-        addOreFeatureToBiomes("lapis__underground__open__y-32_32__placed");
-        addOreFeatureToBiomes("lapis__underground__buried__y-64_64__placed");
+        addOreFeatureToBiomes("lapis__underground__open__placed");
+        addOreFeatureToBiomes("lapis__underground__buried__placed");
 
-        addOreFeatureToBiomes("diamond__underground__best__y-64_-54__placed");
-        addOreFeatureToBiomes("diamond__underground__tail__y-54_16__placed");
+        addOreFeatureToBiomes("diamond__underground__best__placed");
+        addOreFeatureToBiomes("diamond__underground__tail__placed");
 
         // Vanilla-like large diamond veins (ore_diamond_large equivalent, rarity 1/9)
-        addOreFeatureToBiomes("diamond__underground_large__y-64_-54__placed");
+        addOreFeatureToBiomes("diamond__underground_large__placed");
     }
 
     private static void addOreFeatureToBiomes(String featureName) {

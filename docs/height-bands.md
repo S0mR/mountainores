@@ -1,6 +1,8 @@
-# Height bands (Y>=64) for MountainOres (tall worlds up to 2032)
+# Height bands (Y>=64) for MountainOres
 
-Goal: a clear, stable set of height-band names so tuning is easy later, without mixing naming with the “two overlap placed-features” technique.
+Goal: a clear, stable set of height-band names so tuning is easy later, without mixing naming with the "two overlap placed-features" technique.
+
+All above-ground Y values in the JSON files are authored for a **reference max height of 2032**. When `maxWorldHeight` is set to a different value in the config, all Y values >= 64 are **linearly scaled** at runtime (see *Height Scaling* section below).
 
 See also: `docs/worldgen-tuning.md` for “what to change vs what to avoid”.
 
@@ -17,9 +19,12 @@ Example `config/mountainores.json`:
 ```json
 {
 	"overrideVanillaOres": true,
-	"logVanillaOreOverride": false
+	"logVanillaOreOverride": false,
+	"maxWorldHeight": 2032
 }
 ```
+
+Set `maxWorldHeight` to match your world (e.g. `512` for Lithosphere, `320` for vanilla, `2032` for JJThunder).
 
 This specific split keeps the existing major cut lines (256 / 1024 / 1536) intact, while adding two extra “fine-tuning” splits.
 
@@ -34,7 +39,8 @@ These six bands are a **conceptual model** (stable naming and rough cut lines). 
 
 Notes:
 - A band name should describe a **height interval**, not the distribution shape.
-- “Vanilla-like curves” can be built *within a band* by combining multiple placed-features (e.g. a `*__low__y...__placed` + a `*__tail__y...__placed`). This approach is used in a few places (e.g. high tails) to extend a band smoothly without changing the main window.
+- "Vanilla-like curves" can be built *within a band* by combining multiple placed-features (e.g. a `*__low__placed` + a `*__tail__placed`). This approach is used in a few places (e.g. high tails) to extend a band smoothly without changing the main window.
+- The Y values above are for the **reference height** (2032). At runtime they are scaled to `maxWorldHeight`.
 
 ## Current implementation
 
@@ -50,7 +56,7 @@ Practical (implemented) band windows used by the placed-features right now (this
 - Band 5: 975–1600
 - Band 6: 1475–2031
 
-Note on naming: in JSON IDs you may see role segments like `__mid_altitude__` (previously called “upper”) and `__underground__` (Y<=63 override features).
+Note on naming: JSON placed-feature filenames use **role segments** (e.g. `__main__`, `__mid_altitude__`, `__high__`, `__mountain_tail__`, `__underground__`) instead of Y ranges. Concrete Y values are only inside the JSON files.
 
 If `overrideVanillaOres` is enabled, an additional underground **Band 0** is active (Y<=63):
 - Band 0a: -64–0 (deepslate underground)
@@ -79,59 +85,59 @@ Assumption for this table: `overrideVanillaOres: true`.
 ### Detailed placed-feature breakdown
 
 **Coal (6 features):**
-- `coal__underground__y-32_0`: Y=-64..0, uniform, count 10
-- `coal__underground__y1_68`: Y=1..68, trapezoid (plateau 40), count 12
-- `coal__main__y120_260`: Y=120..260, trapezoid (plateau 72), count 8
-- `coal__mid_altitude__y175_360`: Y=175..360, trapezoid (plateau 96), count 6
-- `coal__high__y275_560`: Y=275..560, trapezoid (plateau 140), count 4
-- `coal__high_tail__y555_1360`: Y=555..1360, trapezoid (plateau 260), count 2
+- `coal__underground__deep__placed`: Y=-64..0, uniform, count 10
+- `coal__underground__upper__placed`: Y=1..68, trapezoid (plateau 40), count 12
+- `coal__main__placed`: Y=120..260, trapezoid (plateau 72), count 8
+- `coal__mid_altitude__placed`: Y=175..360, trapezoid (plateau 96), count 6
+- `coal__high__placed`: Y=275..560, trapezoid (plateau 140), count 4
+- `coal__high_tail__placed`: Y=555..1360, trapezoid (plateau 260), count 2
 
 **Copper (8 features):**
-- `copper__underground__y-16_0`: Y=-16..0, uniform, count 4
-- `copper__underground__low__y1_48`: Y=1..48, trapezoid, count 5
-- `copper__underground__peak__y32_68`: Y=32..68, trapezoid (plateau 16), count 7
-- `copper__main__y60_200`: Y=60..200, trapezoid (plateau 72), count 3
-- `copper__mid_altitude__y115_300`: Y=115..300, trapezoid (plateau 96), count 4
-- `copper__high__y215_700`: Y=215..700, trapezoid (plateau 200), count 2
-- `copper__mountain_tail__y595_1100`: Y=595..1100, trapezoid (plateau 200), count 1
-- `copper__dripstone_caves__large`: all heights, trapezoid, count 16 (dripstone caves only)
+- `copper__underground__deep__placed`: Y=-16..0, uniform, count 4
+- `copper__underground__low__placed`: Y=1..48, trapezoid, count 5
+- `copper__underground__peak__placed`: Y=32..68, trapezoid (plateau 16), count 7
+- `copper__main__placed`: Y=60..200, trapezoid (plateau 72), count 3
+- `copper__mid_altitude__placed`: Y=115..300, trapezoid (plateau 96), count 4
+- `copper__high__placed`: Y=215..700, trapezoid (plateau 200), count 2
+- `copper__mountain_tail__placed`: Y=595..1100, trapezoid (plateau 200), count 1
+- `copper__dripstone_caves__large__placed`: all heights, trapezoid, count 16 (dripstone caves only)
 
 **Iron (11 features):**
-- `iron__underground_small__y-64_0`: Y=-64..0, uniform, count 10, size 4 (vanilla-like)
-- `iron__underground__y-64_0`: Y=-64..0, uniform, count 4, size 9
-- `iron__underground__main__y-24_56`: Y=-24..56, trapezoid, count 7
-- `iron__underground__low__y1_32`: Y=1..32, trapezoid (plateau 8), count 6
-- `iron__underground__tail__y24_68`: Y=24..68, trapezoid, count 2
-- `iron__underground_small__y1_68`: Y=1..68, uniform, count 2
-- `iron__main__y60_200`: Y=60..200, trapezoid (plateau 72), count 5
-- `iron__mid_altitude__y115_300`: Y=115..300, trapezoid (plateau 96), count 5
-- `iron__high__y215_700`: Y=215..700, trapezoid (plateau 200), count 8
-- `iron__mountain_tail__y595_1100`: Y=595..1100, trapezoid (plateau 200), count 3
-- `iron__high_tail__y1095_1730`: Y=1095..1730, trapezoid (plateau 200), count 2
+- `iron__underground_small__deep__placed`: Y=-64..0, uniform, count 10, size 4 (vanilla-like)
+- `iron__underground__deep__placed`: Y=-64..0, uniform, count 4, size 9
+- `iron__underground__main__placed`: Y=-24..56, trapezoid, count 7
+- `iron__underground__low__placed`: Y=1..32, trapezoid (plateau 8), count 6
+- `iron__underground__tail__placed`: Y=24..68, trapezoid, count 2
+- `iron__underground_small__upper__placed`: Y=1..68, uniform, count 2
+- `iron__main__placed`: Y=60..200, trapezoid (plateau 72), count 5
+- `iron__mid_altitude__placed`: Y=115..300, trapezoid (plateau 96), count 5
+- `iron__high__placed`: Y=215..700, trapezoid (plateau 200), count 8
+- `iron__mountain_tail__placed`: Y=595..1100, trapezoid (plateau 200), count 3
+- `iron__high_tail__placed`: Y=1095..1730, trapezoid (plateau 200), count 2
 
 **Gold (5 features):**
-- `gold__underground__deep__y-64_-48`: Y=-64..-48, uniform, count 0-1
-- `gold__underground__main__y-64_32`: Y=-64..32, trapezoid, count 4
-- `gold__badlands_extra__y32_all_heights`: Y=32..top, uniform, count 50 (badlands only)
-- `gold__mountain_main__y975_1600`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/18
-- `gold__mountain_tail__y1475_2031`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/24
+- `gold__underground__deep__placed`: Y=-64..-48, uniform, count 0-1
+- `gold__underground__main__placed`: Y=-64..32, trapezoid, count 4
+- `gold__badlands_extra__placed`: Y=32..top, uniform, count 50 (badlands only)
+- `gold__mountain_main__placed`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/18
+- `gold__mountain_tail__placed`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/24
 
 **Diamond (3 features):**
-- `diamond__underground__best__y-64_-54`: Y=-64..-54, trapezoid, count 5
-- `diamond__underground__tail__y-54_16`: Y=-54..16, trapezoid, count 3
-- `diamond__underground_large__y-64_-54`: Y=-64..-54, trapezoid, count 1, rarity 1/5
+- `diamond__underground__best__placed`: Y=-64..-54, trapezoid, count 5
+- `diamond__underground__tail__placed`: Y=-54..16, trapezoid, count 3
+- `diamond__underground_large__placed`: Y=-64..-54, trapezoid, count 1, rarity 1/5
 
 **Redstone (2 features):**
-- `redstone__underground__best__y-64_-54`: Y=-64..-54, trapezoid, count 8
-- `redstone__underground__tail__y-54_16`: Y=-54..16, trapezoid, count 4
+- `redstone__underground__best__placed`: Y=-64..-54, trapezoid, count 8
+- `redstone__underground__tail__placed`: Y=-54..16, trapezoid, count 4
 
 **Lapis Lazuli (2 features):**
-- `lapis__underground__buried__y-64_64`: Y=-64..64, uniform, count 4
-- `lapis__underground__open__y-32_32`: Y=-32..32, trapezoid, count 2
+- `lapis__underground__buried__placed`: Y=-64..64, uniform, count 4
+- `lapis__underground__open__placed`: Y=-32..32, trapezoid, count 2
 
 **Emerald (2 features):**
-- `emerald__mountain_main__y975_1600`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/24
-- `emerald__mountain_tail__y1475_2031`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/32
+- `emerald__mountain_main__placed`: Y=975..1600, trapezoid (plateau 240), count 1, rarity 1/24
+- `emerald__mountain_tail__placed`: Y=1475..2031, trapezoid (plateau 200), count 1, rarity 1/32
 
 ## Vanilla reference (Minecraft 1.21.10)
 
@@ -149,9 +155,32 @@ Values are derived from the vanilla `placed_feature` JSONs and are therefore **a
 | Lapis Lazuli | 0 | -64–64 | Best around Y=0 |
 | Emerald | ~232 | -16–480 | Primarily in mountain biomes (windswept/meadow/peaks) |
 
+## Height scaling
+
+All above-ground placed features use the custom `mountainores:scaled_height_range` placement modifier instead of `minecraft:height_range`. This modifier reads `maxWorldHeight` from the config and linearly scales every sampled Y value >= 64.
+
+**Formula:**
+```
+scaledY = 64 + round((originalY - 64) × (maxWorldHeight - 64) / (2032 - 64))
+```
+
+Underground values (Y < 64) are never scaled.
+
+Lode selector features (`lode__selector__placed`) scale their `min_y`/`max_y` values using the same formula in Java code.
+
+### Example: maxWorldHeight = 512 (Lithosphere)
+
+| Feature | Reference Y | Scaled Y |
+|---|---|---|
+| coal__main | 120–260 | 77–109 |
+| iron__high | 215–700 | 98–209 |
+| iron__high_tail | 1095–1730 | 299–443 |
+| gold__mountain_main | 975–1600 | 272–413 |
+| emerald__mountain_tail | 1475–2031 | 386–512 |
+
 ## Next step (optional)
 
 The 6-band model is already implemented. Optional next steps if you want even finer control:
 
-- Split a band into multiple placed-features (e.g. `*__low__y...__placed` + `*__tail__y...__placed`) to shape “vanilla-like” curves more precisely.
+- Split a band into multiple placed-features (e.g. `*__low__placed` + `*__tail__placed`) to shape "vanilla-like" curves more precisely.
 - Keep IDs stable where possible; renaming JSON filenames/IDs requires changing `WorldGenRegistrar` and can break worldgen if anything stops matching.
