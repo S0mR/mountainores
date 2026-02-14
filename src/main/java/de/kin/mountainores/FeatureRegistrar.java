@@ -9,6 +9,7 @@ import net.minecraft.world.gen.feature.OreFeatureConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("null")
 public class FeatureRegistrar {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("mountainores");

@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Predicate;
 
+@SuppressWarnings("null")
 public class WorldGenRegistrar {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("mountainores");

@@ -64,23 +64,44 @@ If `overrideVanillaOres` is enabled, an additional underground **Band 0** is act
 
 ## Ore overview (current)
 
-This table is derived from the placed-feature JSONs in `src/main/resources/data/mountainores/worldgen/placed_feature/`.
-If you change heights/counts there, update this table too.
+These tables are derived from the placed-feature JSONs in `src/main/resources/data/mountainores/worldgen/placed_feature/`.
+If you change heights/counts there, update these tables too.
 
-This uses the same column layout and ore order as the vanilla reference table below.
 All values are approximate (especially when multiple placed-features contribute).
-Assumption for this table: `overrideVanillaOres: true`.
+Assumption for these tables: `overrideVanillaOres: true`.
+
+Above-ground Y values (Y >= 64) are scaled at runtime using the formula in the *Height Scaling* section.
+Underground values (Y < 64) are **never scaled**.
+
+### Best Y-levels — maxWorldHeight = 2032 (reference / JJThunder)
+
+This is the **reference height** — all placed-feature JSONs are authored for this value. No scaling is applied.
 
 | Ore | Best Y-level (approx.) | Y-level range (approx.) | Biome notes |
 |---|---:|---|---|
-| Coal | ~190 and ~957 and ~35 | -64–68; 120–1360 | All Overworld biomes; underground Y=-64..0 (count 10) + Y=1..68 (count 12); high-altitude extends to 1360 |
-| Copper | ~50 and ~130 | -16–68; 60–1100 | All Overworld biomes; underground peak Y=32..68 (count 7); dripstone caves extra (count 16) |
-| Iron | ~16 and ~460 and ~1412 | -64–68; 60–1730 | All Overworld biomes; deep small veins Y=-64..0 (size 4, count 10); large veins Y=-24..56; high-alt extends to 1730 |
-| Gold | ~-16 and ~1288 | -64–32; 975–2031 | All Overworld biomes; underground trapezoid Y=-64..32 (count 4); badlands extra Y=32–top (count 50); high-alt rare (1/18 and 1/24) |
-| Diamond | ~-59 | -64–16 | All Overworld biomes; best Y=-64..-54 (count 5); tail Y=-54..16 (count 3); large veins (1/5 chance) |
-| Redstone | ~-59 | -64–16 | All Overworld biomes; best Y=-64..-54 (count 8); tail Y=-54..16 (count 4) |
-| Lapis Lazuli | ~0 | -64–64 | All Overworld biomes; buried Y=-64..64 (count 4); open trapezoid Y=-32..32 (count 2) |
-| Emerald | ~1288 | 975–2031 | All Overworld biomes; high-alt only; rare (1/24 and 1/32) |
+| Coal | ~190 and ~35 | -64–68; 120–1360 | All Overworld; underground count 10+12; high-tail extends to 1360 |
+| Copper | ~50 and ~130 | -16–68; 60–1100 | All Overworld; underground peak count 7; dripstone caves extra (count 16) |
+| Iron | ~16 and ~460 | -64–68; 60–1730 | All Overworld; deep small veins count 10; large veins Y=-24..56; high-tail to 1730 |
+| Gold | ~-16 and ~1288 | -64–32; 975–2031 | All Overworld; underground trapezoid count 4; badlands extra count 50; mountain rare (1/18, 1/24) |
+| Diamond | ~-59 | -64–16 | All Overworld; best count 5; tail count 3; large veins (1/5 chance) |
+| Redstone | ~-59 | -64–16 | All Overworld; best count 8; tail count 4 |
+| Lapis Lazuli | ~0 | -64–64 | All Overworld; buried count 4; open trapezoid count 2 |
+| Emerald | ~1288 | 975–2031 | All Overworld; high-alt only; rare (1/24 and 1/32) |
+
+### Best Y-levels — maxWorldHeight = 512 (Lithosphere)
+
+Scaled using `factor = (512 − 64) / (2032 − 64) ≈ 0.2276`. Underground values unchanged.
+
+| Ore | Best Y-level (approx.) | Y-level range (approx.) | Biome notes |
+|---|---:|---|---|
+| Coal | ~93 and ~35 | -64–65; 77–359 | All Overworld; underground unchanged; above-ground compressed |
+| Copper | ~50 and ~79 | -16–65; 60–300 | All Overworld; underground unchanged; dripstone caves extra |
+| Iron | ~16 and ~154 | -64–65; 60–443 | All Overworld; underground unchanged; high-tail to 443 |
+| Gold | ~-16 and ~343 | -64–32; 271–512 | All Overworld; underground unchanged; badlands extra; mountain rare |
+| Diamond | ~-59 | -64–16 | All Overworld; no scaling (underground only) |
+| Redstone | ~-59 | -64–16 | All Overworld; no scaling (underground only) |
+| Lapis Lazuli | ~0 | -64–64 | All Overworld; no scaling (underground only) |
+| Emerald | ~343 | 271–512 | All Overworld; high-alt only; rare |
 
 ### Detailed placed-feature breakdown
 

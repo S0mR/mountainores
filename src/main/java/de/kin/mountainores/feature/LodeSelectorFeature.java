@@ -14,6 +14,7 @@ import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.List;
 
+@SuppressWarnings("null")
 public class LodeSelectorFeature extends Feature<LodeSelectorFeature.Config> {
 
     public record Entry(
